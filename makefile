@@ -1,24 +1,21 @@
-CC	= gcc -g3
-CFLAGS  = -g3
-TARGET1 = child
-TARGET2 = parent 
+# Compiler and flags
+CC = gcc
+CFLAGS = -Wall -g
 
-OBJS1	= child.o
-OBJS2	= parent.o
+# Executable names
+TARGETS = oss user
 
-all:	$(TARGET1) $(TARGET2)
+# Default target that builds all executables
+all: $(TARGETS)
 
-$(TARGET1):	$(OBJS1)
-	$(CC) -o $(TARGET1) $(OBJS1)
+# Rule to build oss executable
+oss: oss.c
+	$(CC) $(CFLAGS) -o oss oss.c
 
-$(TARGET2):	$(OBJS2)
-	$(CC) -o $(TARGET2) $(OBJS2)
+# Rule to build user executable
+user: user.c
+	$(CC) $(CFLAGS) -o user user.c
 
-child.o:	child.c
-	$(CC) $(CFLAGS) -c child.c 
-
-parent.o:	parent.c
-	$(CC) $(CFLAGS) -c parent.c
-
+# Clean target to remove all compiled files
 clean:
-	/bin/rm -f *.o $(TARGET1) $(TARGET2)
+	rm -f $(TARGETS)
